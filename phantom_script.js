@@ -8,12 +8,10 @@ var isReady = function () {
         || !Meteor.status().connected) {
       return false;
     }
-    if (typeof Package === 'undefined'
-        || Package.spiderable === undefined
-        || Package.spiderable.Spiderable === undefined) {
+    if (typeof Spiderable === undefined) {
       return false;
     }
-    return Package.spiderable.Spiderable.isReady();
+    return Spiderable.isReady();
   });
 };
 

@@ -105,15 +105,14 @@ WebApp.connectHandlers.use(function (req, res, next) {
           res.writeHead(200, {'Content-Type': 'text/html; charset=UTF-8'});
           res.end(cache.html);
       } else {
-
-          runFile = Meteor._wrapAsync(child_process.execFile);
+          runFile = Meteor.wrapAsync(child_process.execFile);
           try {
               var stdout = runFile(
                   '/bin/bash',
                   ['-c',
                    ("exec phantomjs --load-images=no --disk-cache=true /dev/stdin <<'END'\n" +
                     phantomScript + "END\n")],
-                  {timeout: REQUEST_TIMEOUT, maxBuffer: MAX_BUFFER});
+                  {timeout: Spiderable.requestTimeoutMs, maxBuffer: MAX_BUFFER});
               
               // function (error, stdout, stderr) {
               // if (!error && /<html/i.test(stdout)) {
@@ -130,7 +129,7 @@ WebApp.connectHandlers.use(function (req, res, next) {
           } catch (e) {
               
               Meteor._debug("spiderable: phantomjs not installed. Download and install from http://phantomjs.org/");
-              // Meteor._debug(e);
+              Meteor._debug(e);
               next();
           }
       }

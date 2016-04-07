@@ -1,26 +1,29 @@
 Package.describe({
+  name: "wtsarchive:spiderable",
   summary: "Makes the application crawlable to web spiders (cached)",
-  version: "1.0.5",
-  git: 'https://github.com/chfritz/meteor-spiderable-cached.git'
+  version: "1.0.12",
+  git: 'https://github.com/wtsarchive/meteor-spiderable-cached.git'
 });
 
-Package.on_use(function (api) {
-  api.versionsFrom('METEOR@0.9.3.1');
+Package.onUse(function (api) {
   api.use('webapp', 'server');
+  api.use(['ddp', 'tracker'], 'client');
+  api.use(['callback-hook'], 'client');
   api.use(['templating'], 'client');
   api.use(['underscore'], ['client', 'server']);
 
   api.export('Spiderable');
 
-  api.add_files('spiderable.html', 'client');
-  api.add_files('spiderable.js', ['client', 'server']);
-  api.add_files('spiderable_server.js', 'server');
-  api.add_files('spiderable_client.js', 'client');
+  api.addFiles('spiderable.html', 'client');
+  api.addFiles('spiderable.js', ['client', 'server']);
+  api.addFiles('spiderable_server.js', 'server');
+  api.addFiles('spiderable_client.js', 'client');
 
-  api.add_files('phantom_script.js', 'server', { isAsset: true });
+  api.addAssets('phantom_script.js', 'server');
 });
 
-Package.on_test(function (api) {
-  api.use(['spiderable', 'tinytest']);
-  api.add_files('spiderable_tests.js', 'server');
+Package.onTest(function (api) {
+  api.use(['spiderable', 'tinytest', 'underscore', 'ddp']);
+  api.addFiles('spiderable_client_tests.js', 'client');
+  api.addFiles('spiderable_server_tests.js', 'server');
 });

@@ -18,12 +18,13 @@ Spiderable.userAgentRegExps = [
   /^Facebot/,
   /^linkedinbot/i,
   /^twitterbot/i,
+  /Googlebot/i,
   /^slackbot-linkexpanding/i
 ];
 
 // how long to let phantomjs run before we kill it (and send down the
 // regular page instead). Users may modify this number.
-Spiderable.requestTimeoutMs = 15*1000;
+Spiderable.requestTimeoutMs = 45*1000;
 // maximum size of result HTML. node's default is 200k which is too
 // small for our docs.
 var MAX_BUFFER = 5*1024*1024; // 5MB
